@@ -1,8 +1,14 @@
+import { ThemeProvider } from 'styled-components';
+
+import GlobalStyles from './assets/styles/global';
+import defaultTheme from './assets/styles/themes/default';
+
 function App() {
   return (
-    <div className="App">
+    <ThemeProvider theme={defaultTheme}>
+      <GlobalStyles />
       <h1>My Contacts</h1>
-    </div>
+    </ThemeProvider>
   );
 }
 
