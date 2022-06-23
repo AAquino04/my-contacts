@@ -1,5 +1,5 @@
 import PageHeader from '../../components/PageHeader';
-import { Input, Select } from '../../components/common';
+import { Button, Input, Select } from '../../components/common';
 
 export default function NewContact() {
   return (
@@ -14,6 +14,10 @@ export default function NewContact() {
         <option value={1}>1</option>
         <option value={1}>1</option>
       </Select>
+
+      <Button type="button" disabled>
+        Cadastrar
+      </Button>
     </>
   );
 }
