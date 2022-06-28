@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.header`
+  margin-bottom: 24px;
+
   a {
     text-decoration: none;
     display: flex;
@@ -19,6 +21,5 @@ export const Container = styled.header`
 
   h1 {
     font-size: 24px;
-    margin-bottom: 24px;
   }
 `;
