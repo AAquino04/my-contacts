@@ -3,6 +3,8 @@ import {
   Card, Container, Header, InputSearchContainer, ListContainer,
 } from './styles';
 
+import Modal from '../../components/Modal';
+
 import arrow from '../../assets/images/arrow.svg';
 import edit from '../../assets/images/edit.svg';
 import trash from '../../assets/images/trash.svg';
@@ -10,6 +12,8 @@ import trash from '../../assets/images/trash.svg';
 export default function Home() {
   return (
     <Container>
+      <Modal danger />
+
       <InputSearchContainer>
         <input type="text" placeholder="Pesquisar contato pelo nome..." />
       </InputSearchContainer>

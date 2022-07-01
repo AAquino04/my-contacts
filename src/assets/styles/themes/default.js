@@ -8,8 +8,13 @@ export default {
       main: '#5061fc',
     },
     gray: {
-      dark: '#222222',
-      light: '#bcbcbc',
+      dark: '#222222', // 900
+      light: '#bcbcbc', // 200
+    },
+    danger: {
+      dark: '#f63131',
+      main: '#fc5050',
+      light: '#f97171',
     },
   },
 };
