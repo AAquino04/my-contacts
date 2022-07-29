@@ -50,24 +50,26 @@ export const Header = styled.header`
   }
 `;
 
-export const ListContainer = styled.div`
+export const ListHeader = styled.header`
   margin-top: 24px;
+  margin-bottom: 8px;
 
-  header {
-    margin-bottom: 8px;
+  button {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
 
-    button {
-      background: transparent;
-      border: none;
-      display: flex;
-      align-items: center;
+    span {
+      margin-right: 8px;
+      font-weight: 700;
+      color: ${({ theme }) => theme.colors.primary.main};
+    }
 
-      span {
-        margin-right: 8px;
-        font-weight: 700;
-        color: ${({ theme }) => theme.colors.primary.main};
-      }
-  }
+    img {
+      transition: transform 0.2s ease-in;
+      transform: rotate(${({ order }) => (order === 'asc' ? '180deg' : '0')})
+    }
   }
 `;
 
