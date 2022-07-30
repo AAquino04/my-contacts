@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 
 import Loader from '../../components/Loader';
 
-import delay from '../../utils/delay';
-
 import arrow from '../../assets/images/arrow.svg';
 import edit from '../../assets/images/edit.svg';
 import trash from '../../assets/images/trash.svg';
 
+import ContactsService from '../../services/ContactsService';
 import {
   Card, Container, Header, InputSearchContainer, ListHeader,
 } from './styles';
@@ -28,10 +27,8 @@ export default function Home() {
       try {
         setIsLoading(true);
 
-        const response = await fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`);
-        await delay(2000);
+        const contactsList = await ContactsService.listContacts(orderBy);
 
-        const contactsList = await response.json();
         setContacts(contactsList);
       } catch (error) {
         console.log(error);
