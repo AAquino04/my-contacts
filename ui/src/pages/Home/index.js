@@ -31,7 +31,7 @@ export default function Home() {
 
         setContacts(contactsList);
       } catch (error) {
-        console.log(error);
+        console.log('Home catch: ', error);
       } finally {
         setIsLoading(false);
       }
