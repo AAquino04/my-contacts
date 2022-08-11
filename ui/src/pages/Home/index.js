@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable no-nested-ternary */
 import {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
@@ -8,13 +10,14 @@ import { Button } from '../../components/common';
 
 import arrow from '../../assets/images/arrow.svg';
 import edit from '../../assets/images/edit.svg';
+import emptyBox from '../../assets/images/empty-box.svg';
 import sad from '../../assets/images/sad.svg';
 import trash from '../../assets/images/trash.svg';
 
 import ContactsService from '../../services/ContactsService';
 
 import {
-  Card, Container, ErrorContainer, Header, InputSearchContainer, ListHeader,
+  Card, Container, EmptyListContainer, ErrorContainer, Header, InputSearchContainer, ListHeader,
 } from './styles';
 
 export default function Home() {
@@ -63,17 +66,29 @@ export default function Home() {
     <Container>
       <Loader isLoading={isLoading} />
 
-      <InputSearchContainer>
-        <input
-          value={searchTerm}
-          type="text"
-          placeholder="Pesquisar contato pelo nome..."
-          onChange={handleChangeSearchTerm}
-        />
-      </InputSearchContainer>
+      {contacts.length > 0 && (
+        <InputSearchContainer>
+          <input
+            value={searchTerm}
+            type="text"
+            placeholder="Pesquisar contato pelo nome..."
+            onChange={handleChangeSearchTerm}
+          />
+        </InputSearchContainer>
+      )}
 
-      <Header hasError={hasError}>
-        {!hasError && (
+      <Header
+        justifyContent={
+          hasError
+            ? 'flex-end'
+            : (
+              contacts.length > 0
+                ? 'space-between'
+                : 'center'
+            )
+        }
+      >
+        {(!hasError && contacts.length > 0) && (
           <strong>
             {filteredContacts.length}
             {filteredContacts.length === 1 ? ' contato' : ' contatos'}
@@ -101,6 +116,17 @@ export default function Home() {
 
       {!hasError && (
         <>
+          {(contacts.length < 1 && !isLoading) && (
+            <EmptyListContainer>
+              <img src={emptyBox} alt="Empty Box" />
+
+              <p>
+                Você ainda não tem nenhum contato cadastrado!
+                Clique no botão <strong>"Novo Contato"</strong> acima para cadastrar o seu primeiro!
+              </p>
+            </EmptyListContainer>
+          )}
+
           {filteredContacts.length > 0 && (
             <ListHeader order={orderBy}>
               <button type="button" onClick={handleToggleOrderBy}>
