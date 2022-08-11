@@ -5,19 +5,27 @@ import {
 } from 'react';
 import { Link } from 'react-router-dom';
 
-import Loader from '../../components/Loader';
 import { Button } from '../../components/common';
+import Loader from '../../components/Loader';
 
 import arrow from '../../assets/images/arrow.svg';
 import edit from '../../assets/images/edit.svg';
 import emptyBox from '../../assets/images/empty-box.svg';
+import magnifierQuestion from '../../assets/images/magnifier-question.svg';
 import sad from '../../assets/images/sad.svg';
 import trash from '../../assets/images/trash.svg';
 
 import ContactsService from '../../services/ContactsService';
 
 import {
-  Card, Container, EmptyListContainer, ErrorContainer, Header, InputSearchContainer, ListHeader,
+  Card,
+  Container,
+  EmptyListContainer,
+  ErrorContainer,
+  Header,
+  InputSearchContainer,
+  ListHeader,
+  SearchNotFoundContainer,
 } from './styles';
 
 export default function Home() {
@@ -125,6 +133,14 @@ export default function Home() {
                 Clique no botão <strong>"Novo Contato"</strong> acima para cadastrar o seu primeiro!
               </p>
             </EmptyListContainer>
+          )}
+
+          {(contacts.length > 0 && filteredContacts.length < 1) && (
+            <SearchNotFoundContainer>
+              <img src={magnifierQuestion} alt="Magnifier Question" />
+
+              <span>Nenhum resultado foi encontrado para <strong>"{searchTerm}"</strong>.</span>
+            </SearchNotFoundContainer>
           )}
 
           {filteredContacts.length > 0 && (

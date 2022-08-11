@@ -161,3 +161,15 @@ export const EmptyListContainer = styled.div`
     color: ${({ theme }) => theme.colors.primary.main}
   }
 `;
+
+export const SearchNotFoundContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+  margin-top: 16px;
+
+  span {
+    color: ${({ theme }) => theme.colors.gray.light};
+    margin-left: 24px;
+    word-break: break-word;
+  }
+`;
