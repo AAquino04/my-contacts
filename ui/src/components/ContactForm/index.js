@@ -12,7 +12,7 @@ import CategoriesService from '../../services/CategoriesService';
 
 import { Form, ButtonContainer } from './styles';
 
-export default function ContactForm({ buttonLabel }) {
+export default function ContactForm({ buttonLabel, onSubmit }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -70,11 +70,11 @@ export default function ContactForm({ buttonLabel }) {
     const contact = {
       name,
       email,
-      phone: phone.replace(/\D/g, ''),
+      phone,
       categoryId,
     };
 
-    console.log('contact', contact);
+    onSubmit(contact);
   }
 
   return (
@@ -139,4 +139,5 @@ export default function ContactForm({ buttonLabel }) {
 
 ContactForm.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
