@@ -7,10 +7,42 @@ class HttpClient {
     this.baseUrl = baseUrl;
   }
 
-  async get(route) {
+  get(route, options) {
+    return this.performRequest(route, {
+      method: 'GET',
+      headers: options?.headers,
+    });
+  }
+
+  post(route, options) {
+    return this.performRequest(route, {
+      method: 'GET',
+      body: options?.body,
+      headers: options?.headers,
+    });
+  }
+
+  async performRequest(route, options) {
     await delay(2000);
 
-    const response = await fetch(`${this.baseUrl}${route}`);
+    const headers = new Headers();
+
+    // Avoids preflight for GET requests
+    if (options.body) {
+      headers.append('Content-Type', 'application/json');
+    }
+
+    if (options.headers) {
+      Object.entries(options.headers).forEach(([name, value]) => {
+        headers.append(name, value);
+      });
+    }
+
+    const response = await fetch(`${this.baseUrl}${route}`, {
+      method: options.method,
+      body: JSON.stringify(options.body),
+      headers,
+    });
 
     let body = null;
     const contentType = response.headers.get('Content-Type');
@@ -23,32 +55,6 @@ class HttpClient {
     }
 
     throw new APIError(response, body);
-  }
-
-  async post(route, body) {
-    await delay(2000);
-
-    const headers = new Headers({
-      'Content-Type': 'application/json',
-    });
-
-    const response = await fetch(`${this.baseUrl}${route}`, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers,
-    });
-
-    let responseBody = null;
-    const contentType = response.headers.get('Content-Type');
-    if (contentType.includes('application/json')) {
-      responseBody = await response.json();
-    }
-
-    if (response.ok) {
-      return responseBody;
-    }
-
-    throw new APIError(response, responseBody);
   }
 }
 
