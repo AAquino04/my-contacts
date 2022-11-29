@@ -5,7 +5,6 @@ import {
 } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Button } from '../../components/common';
 import Loader from '../../components/Loader';
 
 import arrow from '../../assets/images/arrow.svg';
@@ -27,6 +26,7 @@ import {
   ListHeader,
   SearchNotFoundContainer,
 } from './styles';
+import Button from '../../components/Button';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);

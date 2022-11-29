@@ -10,10 +10,11 @@ export default function NewContact() {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        category_id: formData.category_id,
+        category_id: formData.categoryId,
       };
 
       const response = await ContactsService.createContact(contact);
+
       console.log(response);
     } catch {
       alert('Erro ao cadastrar o contato');

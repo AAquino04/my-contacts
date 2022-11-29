@@ -16,7 +16,7 @@ class HttpClient {
 
   post(route, options) {
     return this.performRequest(route, {
-      method: 'GET',
+      method: 'POST',
       body: options?.body,
       headers: options?.headers,
     });
