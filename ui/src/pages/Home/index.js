@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 
 import Loader from '../../components/Loader';
 
-import arrow from '../../assets/images/arrow.svg';
-import edit from '../../assets/images/edit.svg';
+import arrow from '../../assets/images/icons/arrow.svg';
+import edit from '../../assets/images/icons/edit.svg';
 import emptyBox from '../../assets/images/empty-box.svg';
 import magnifierQuestion from '../../assets/images/magnifier-question.svg';
 import sad from '../../assets/images/sad.svg';
-import trash from '../../assets/images/trash.svg';
+import trash from '../../assets/images/icons/trash.svg';
 
 import ContactsService from '../../services/ContactsService';
 
