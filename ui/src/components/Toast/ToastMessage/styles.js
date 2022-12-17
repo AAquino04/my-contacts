@@ -15,6 +15,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 8px;
+  cursor: pointer;
 
   ${({ type }) => containerVariants[type] || containerVariants.default};
 

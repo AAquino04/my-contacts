@@ -6,24 +6,28 @@ import successToast from '../../../assets/images/icons/success-toast.svg';
 
 import { Container } from './styles';
 
-export default function ToastMessage({ text, type }) {
+export default function ToastMessage({ message, onRemoveMessage }) {
+  function handleMessageClick() {
+    onRemoveMessage(message.id);
+  }
+
   return (
-    <Container type={type}>
-      {type === 'danger' && <img src={dangerToast} alt="X" />}
-      {type === 'success' && <img src={successToast} alt="Check" />}
+    <Container type={message.type} onClick={handleMessageClick}>
+      {message.type === 'danger' && <img src={dangerToast} alt="X" />}
+      {message.type === 'success' && <img src={successToast} alt="Check" />}
 
       <strong>
-        {text}
+        {message.text}
       </strong>
     </Container>
   );
 }
 
-ToastMessage.defaultProps = {
-  type: 'default',
-};
-
 ToastMessage.propTypes = {
-  text: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['danger', 'default', 'success']),
+  message: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    text: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['danger', 'default', 'success']),
+  }).isRequired,
+  onRemoveMessage: PropTypes.func.isRequired,
 };
