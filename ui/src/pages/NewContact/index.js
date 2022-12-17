@@ -3,6 +3,8 @@ import PageHeader from '../../components/PageHeader';
 
 import ContactsService from '../../services/ContactsService';
 
+import toast from '../../utils/toast';
+
 export default function NewContact() {
   async function handleSubmit(formData) {
     try {
@@ -13,11 +15,17 @@ export default function NewContact() {
         category_id: formData.categoryId,
       };
 
-      const response = await ContactsService.createContact(contact);
+      await ContactsService.createContact(contact);
 
-      console.log(response);
+      toast({
+        type: 'success',
+        text: 'Contato cadastrado com sucesso!',
+      });
     } catch {
-      alert('Erro ao cadastrar o contato');
+      toast({
+        type: 'danger',
+        text: 'Ocorreu um erro ao cadastrar o contato!',
+      });
     }
   }
 

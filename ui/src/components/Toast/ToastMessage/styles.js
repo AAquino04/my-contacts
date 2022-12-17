@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 
 const containerVariants = {
-  danger: css`background-color: ${({ theme }) => theme.colors.primary.main};`,
-  default: css`background-color: ${({ theme }) => theme.colors.danger.main};`,
+  danger: css`background-color: ${({ theme }) => theme.colors.danger.main};`,
+  default: css`background-color: ${({ theme }) => theme.colors.primary.main};`,
   success: css`background-color: ${({ theme }) => theme.colors.success.main};`,
 };
 
