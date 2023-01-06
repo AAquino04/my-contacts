@@ -80,6 +80,11 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
 
     await onSubmit(contact);
 
+    setName('');
+    setEmail('');
+    setPhone('');
+    setCategoryId('');
+
     setIsSubmitting(false);
   }
 
