@@ -30,6 +30,13 @@ class HttpClient {
     });
   }
 
+  delete(route, options) {
+    return this.performRequest(route, {
+      method: 'DELETE',
+      headers: options?.headers,
+    });
+  }
+
   async performRequest(route, options) {
     await delay(2000);
 
@@ -54,7 +61,7 @@ class HttpClient {
 
     let body = null;
     const contentType = response.headers.get('Content-Type');
-    if (contentType.includes('application/json')) {
+    if (contentType?.includes('application/json')) {
       body = await response.json();
     }
 
