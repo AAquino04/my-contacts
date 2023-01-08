@@ -91,11 +91,6 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
 
     await onSubmit(contactData);
 
-    setName('');
-    setEmail('');
-    setPhone('');
-    setCategoryId('');
-
     setIsSubmitting(false);
   }
 

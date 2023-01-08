@@ -22,6 +22,14 @@ class HttpClient {
     });
   }
 
+  put(route, options) {
+    return this.performRequest(route, {
+      method: 'PUT',
+      body: options?.body,
+      headers: options?.headers,
+    });
+  }
+
   async performRequest(route, options) {
     await delay(2000);
 
