@@ -5,7 +5,7 @@ export const Overlay = styled.div`
   width: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(2px);
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   display: flex;
@@ -21,7 +21,7 @@ export const Container = styled.div`
   padding: 24px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04);
 
-  h1 {
+  > h1 { /* Applied only to direct children */
     font-size: 1.375rem;
     font-weight: 700;
     color: ${({ theme, danger }) => (
@@ -29,8 +29,8 @@ export const Container = styled.div`
   )}
   }
 
-  p {
-    margin-top: 8px;
+  .modal-body {
+    margin-top: 32px;
   }
 `;
 
@@ -46,6 +46,7 @@ export const Footer = styled.footer`
     border: none;
     padding: 0 16px;
     font-size: 1rem;
+    margin-right: 16px;
     color: ${({ theme }) => theme.colors.gray.light}
   }
 `;

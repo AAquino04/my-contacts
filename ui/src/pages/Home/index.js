@@ -5,14 +5,16 @@ import {
 } from 'react';
 import { Link } from 'react-router-dom';
 
+import Button from '../../components/Button';
 import Loader from '../../components/Loader';
+import Modal from '../../components/Modal';
 
+import emptyBox from '../../assets/images/empty-box.svg';
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
-import emptyBox from '../../assets/images/empty-box.svg';
+import trash from '../../assets/images/icons/trash.svg';
 import magnifierQuestion from '../../assets/images/magnifier-question.svg';
 import sad from '../../assets/images/sad.svg';
-import trash from '../../assets/images/icons/trash.svg';
 
 import ContactsService from '../../services/ContactsService';
 
@@ -26,7 +28,6 @@ import {
   ListHeader,
   SearchNotFoundContainer,
 } from './styles';
-import Button from '../../components/Button';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
@@ -73,6 +74,16 @@ export default function Home() {
   return (
     <Container>
       <Loader isLoading={isLoading} />
+
+      <Modal
+        confirmLabel="Deletar"
+        danger
+        onCancel={() => console.log('cancel')}
+        onConfirm={() => console.log('confirm')}
+        title={'Tem certeza que deseja remover o contato "barabin"?'}
+      >
+        <p>Barabin</p>
+      </Modal>
 
       {contacts.length > 0 && (
         <InputSearchContainer>
