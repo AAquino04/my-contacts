@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import isValidEmail from '../../utils/isValidEmail';
 import formatPhone from '../../utils/formatPhone';
 import useErrors from '../../hooks/useErrors';
+import useSafeAsyncSetState from '../../hooks/useSafeAsyncSetState';
 
 import Button from '../Button';
 import FormGroup from '../FormGroup';
@@ -20,9 +21,15 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [categoryId, setCategoryId] = useState('');
-  const [categories, setCategories] = useState([]);
-  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+  const [categories, setCategories] = useSafeAsyncSetState([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useSafeAsyncSetState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    errors, setError, removeError, getErrorMessageByFieldName,
+  } = useErrors();
+
+  const formIsValid = (name && errors.length === 0);
 
   useImperativeHandle(ref, () => ({
     setFieldsValues: (contact) => {
@@ -40,12 +47,6 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
     },
   }), []);
 
-  const {
-    errors, setError, removeError, getErrorMessageByFieldName,
-  } = useErrors();
-
-  const formIsValid = (name && errors.length === 0);
-
   useEffect(() => {
     async function loadCategories() {
       try {
@@ -58,7 +59,7 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
     }
 
     loadCategories();
-  }, []);
+  }, [setCategories, setIsLoadingCategories]);
 
   function handleNameChange(event) {
     setName(event.target.value);
