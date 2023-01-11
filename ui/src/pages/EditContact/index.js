@@ -7,6 +7,8 @@ import PageHeader from '../../components/PageHeader';
 
 import ContactsService from '../../services/ContactsService';
 
+import useIsMounted from '../../hooks/useIsMounted';
+
 import toast from '../../utils/toast';
 
 export default function EditContact() {
@@ -16,28 +18,33 @@ export default function EditContact() {
 
   const { id } = useParams();
   const history = useHistory();
+  const isMounted = useIsMounted();
 
   useEffect(() => {
     async function loadContact() {
       try {
         const contact = await ContactsService.getContactById(id);
 
-        contactFormRef.current.setFieldsValues(contact);
+        if (isMounted()) {
+          contactFormRef.current.setFieldsValues(contact);
 
-        setContactName(contact.name);
-        setIsLoading(false);
+          setContactName(contact.name);
+          setIsLoading(false);
+        }
       } catch {
-        history.push('/');
+        if (isMounted()) {
+          history.push('/');
 
-        toast({
-          type: 'danger',
-          text: 'Contato não encontrado!',
-        });
+          toast({
+            type: 'danger',
+            text: 'Contato não encontrado!',
+          });
+        }
       }
     }
 
     loadContact();
-  }, [id, history]);
+  }, [id, history, isMounted]);
 
   async function handleSubmit(formData) {
     try {

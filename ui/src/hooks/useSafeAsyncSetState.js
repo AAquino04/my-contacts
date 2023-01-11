@@ -1,6 +1,5 @@
-import {
-  useCallback, useEffect, useRef, useState,
-} from 'react';
+import { useCallback, useState } from 'react';
+import useIsMounted from './useIsMounted';
 
 /**
  * This hook is used to suppress the "Can't perform a React state update on
@@ -12,21 +11,13 @@ import {
 export default function useSafeAsyncSetState(initialState) {
   const [state, setState] = useState(initialState);
 
-  const isMounted = useRef(false);
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
+  const isMounted = useIsMounted();
 
   const setSafeAsyncState = useCallback((data) => {
-    if (isMounted.current) {
+    if (isMounted()) {
       setState(data);
     }
-  }, []);
+  }, [isMounted]);
 
   return [state, setSafeAsyncState];
 }
