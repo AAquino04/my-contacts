@@ -90,6 +90,8 @@ export const Card = styled.div`
   }
 
   .info {
+    max-width: 360px;
+
     .contact-name {
       display: flex;
       align-items: center;
@@ -102,6 +104,12 @@ export const Card = styled.div`
         padding: 4px;
         border-radius: 4px;
         margin-left: 8px;
+      }
+
+      strong {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
       }
     }
 
