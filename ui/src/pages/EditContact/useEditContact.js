@@ -53,11 +53,20 @@ export default function useEditContact() {
         text: 'Contato editado com sucesso!',
         duration: 3000,
       });
-    } catch {
-      toast({
-        type: 'danger',
-        text: 'Ocorreu um erro ao editar o contato!',
-      });
+    } catch (error) {
+      const emailAlreadyInUse = error.message.includes('The e-mail is already in use');
+
+      if (emailAlreadyInUse) {
+        toast({
+          type: 'danger',
+          text: 'O e-mail informado já está em uso!',
+        });
+      } else {
+        toast({
+          type: 'danger',
+          text: 'Ocorreu um erro ao editar o contato!',
+        });
+      }
     }
   }
 
