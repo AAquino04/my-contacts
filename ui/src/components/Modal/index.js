@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Button from '../Button';
@@ -17,12 +17,31 @@ export default function Modal({
   title,
   visible,
 }) {
-  if (!visible) return null;
+  const [shouldRender, setShouldRender] = useState(visible);
+
+  useEffect(() => {
+    if (visible) {
+      setShouldRender(true);
+    }
+
+    let timeoutId;
+    if (!visible) {
+      timeoutId = setTimeout(() => {
+        setShouldRender(false);
+      }, 200);
+    }
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [visible]);
+
+  if (!shouldRender) return null;
 
   return (
     <ReactPortal containerId="modal-root">
-      <Overlay>
-        <Container danger={danger}>
+      <Overlay isLeaving={!visible}>
+        <Container isLeaving={!visible} danger={danger}>
           <h1>{title}</h1>
 
           <div className="modal-body">
