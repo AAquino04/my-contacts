@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import Button from '../Button';
@@ -18,21 +18,27 @@ export default function Modal({
   visible,
 }) {
   const [shouldRender, setShouldRender] = useState(visible);
+  const overlayRef = useRef(null);
 
   useEffect(() => {
     if (visible) {
       setShouldRender(true);
     }
 
-    let timeoutId;
+    function handleAnimationEnd() {
+      setShouldRender(false);
+    }
+
+    // Necessary for the cleanup function to work properly as the reference to
+    // overlayRef.current might have changed by the time the cleanup function is called
+    const overlayRefElement = overlayRef.current;
+
     if (!visible) {
-      timeoutId = setTimeout(() => {
-        setShouldRender(false);
-      }, 200);
+      overlayRefElement?.addEventListener('animationend', handleAnimationEnd);
     }
 
     return () => {
-      clearTimeout(timeoutId);
+      overlayRefElement?.removeEventListener('animationend', handleAnimationEnd);
     };
   }, [visible]);
 
@@ -40,7 +46,7 @@ export default function Modal({
 
   return (
     <ReactPortal containerId="modal-root">
-      <Overlay isLeaving={!visible}>
+      <Overlay isLeaving={!visible} ref={overlayRef}>
         <Container isLeaving={!visible} danger={danger}>
           <h1>{title}</h1>
 
