@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import Button from '../Button';
 import ReactPortal from '../ReactPortal';
+
+import useAnimatedUnmount from '../../hooks/useAnimatedUnmount';
 
 import { Container, Footer, Overlay } from './styles';
 
@@ -17,36 +19,14 @@ export default function Modal({
   title,
   visible,
 }) {
-  const [shouldRender, setShouldRender] = useState(visible);
-  const overlayRef = useRef(null);
-
-  useEffect(() => {
-    if (visible) {
-      setShouldRender(true);
-    }
-
-    function handleAnimationEnd() {
-      setShouldRender(false);
-    }
-
-    // Necessary for the cleanup function to work properly as the reference to
-    // overlayRef.current might have changed by the time the cleanup function is called
-    const overlayRefElement = overlayRef.current;
-
-    if (!visible) {
-      overlayRefElement?.addEventListener('animationend', handleAnimationEnd);
-    }
-
-    return () => {
-      overlayRefElement?.removeEventListener('animationend', handleAnimationEnd);
-    };
-  }, [visible]);
+  const { shouldRender, animatedElementRef } = useAnimatedUnmount(visible);
+  // console.log(shouldRender, animatedElementRef);
 
   if (!shouldRender) return null;
 
   return (
     <ReactPortal containerId="modal-root">
-      <Overlay isLeaving={!visible} ref={overlayRef}>
+      <Overlay isLeaving={!visible} ref={animatedElementRef}>
         <Container isLeaving={!visible} danger={danger}>
           <h1>{title}</h1>
 
